@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>    
+    <div class="sidebar">
+		<ul>
+			<li><p>My Webpage</p></li>
+			<li><a href="{% url 'student_list' %}">Home</a></li>
+			<li><a href="{% url 'student_create' %}">Create Student</a></li>
+		</ul>
+	</div>
+    <main>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+</body>
+</html>

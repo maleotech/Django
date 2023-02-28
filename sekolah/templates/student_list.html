@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Student List{% endblock %}
+
+{% block content %}
+  <div class="list">
+    <h1>Student List</h1>
+    <a class="create_new" href="{% url 'student_create' %}">Create New</a>
+    
+    <form class ="search" method="get" action="{% url 'student_list' %}">
+      <input type="text" name="q" value="{% if query %} {{ query }} {% endif %}">
+      <button type="submit">Search</button>
+    </form>
+
+    <table>
+      <tr>
+        <th>Foto</th>
+        <th>Nama</th>
+        <th>Kelas</th>
+        <th>Email</th>
+        <th>Aksi</th>
+      </tr>
+      {% for student in students %}
+      <tr>
+        <td>
+          {% if student.image %}
+            <img src="{{ student.image.url }}" alt="{{ student.first_name }} {{ student.last_name }}" width="100" height="100">
+          {% endif %}
+        </td>
+        <td>{{ student.first_name }} {{ student.last_name }}</td>
+        <td>{{ student.kelas }}</td>
+        <td>{{ student.email }}</td>
+        <td><a class="more_info" href="{% url 'student_detail' pk=student.pk %}">More info</a></td>
+      </tr>
+    {% endfor %}
+    </table>
+
+    <div class="pagination">
+      <span class="step-links">
+          {% if students.has_previous %}
+              <a href="?page={{ students.previous_page_number }}">prev</a>
+          {% endif %}
+
+          <span class="current-page">
+            Page {{ students.number }} of {{ students.paginator.num_pages }}.
+          </span>
+        
+          {% if students.has_next %}
+              <a href="?page={{ students.next_page_number }}">next</a>
+          {% endif %}
+      </span>
+    </div>
+    
+  </div>
+{% endblock %}
+
+
